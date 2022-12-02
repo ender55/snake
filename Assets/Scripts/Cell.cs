@@ -1,14 +1,12 @@
-﻿public class Cell
+﻿using UnityEngine;
+
+public class Cell: IStatable
 {
-    private CellContent currentCellContent;
+    public StateMachine StateMachine { get; }
 
-    public CellContent CurrentCellContent { get; set; }
-
-    public enum CellContent
+    public Cell(CellState state)
     {
-        Snake,
-        Food,
-        Wall,
-        Floor
+        StateMachine = new StateMachine();
+        StateMachine.SetState(state);
     }
 }

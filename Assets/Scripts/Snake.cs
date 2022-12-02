@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snake
+public class Snake : IStatable
 {
     private List<SnakePart> snakePartsList = new List<SnakePart>();
     private Vector2Int direction = new Vector2Int();
 
     public Vector2Int Direction { get; set; }
+    public StateMachine StateMachine { get; }
 
     public Snake(Vector2Int position, Vector2Int direction, int snakeLength)
     {
