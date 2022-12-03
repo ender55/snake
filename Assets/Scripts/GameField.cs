@@ -1,6 +1,8 @@
 public class GameField
 {
     private Cell[,] field;
+    
+    public Cell[,] Field { get; }
 
     public int Height { get; }
     public int Width { get; }
