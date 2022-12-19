@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class SinglePlayerSpawner : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class SinglePlayerSpawner : MonoBehaviour
     [SerializeField] private PlayerKeyCodes playerKeyCodes;
 
     private SnakeBuilder snakeBuilder = new SnakeBuilder();
+
+    private void Awake()
+    {
+        Time.timeScale = 0.1f;
+    }
 
     private void Start()
     {

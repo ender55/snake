@@ -9,10 +9,10 @@ public class SnakeBuilder
         var snake = GameObject.Instantiate(snakeGameObject,
             position, Quaternion.Euler(direction)).GetComponent<Snake>();
         GameObject.Destroy(snakeGameObject);
-        CreateSnakePart(snakePartPrefab, position, direction, snake, false).transform.SetParent(snake.transform);
+        CreateSnakePart(snakePartPrefab, position, direction, snake, false);
         for (int i = 1; i < length; i++)
         {
-            CreateSnakePart(snakePartPrefab, position - direction * i, direction, snake).transform.SetParent(snake.transform);
+            CreateSnakePart(snakePartPrefab, position - direction * i, direction, snake);
         }
 
         snake.MovementInputController.PlayerKeyCodes = playerKeyCodes;

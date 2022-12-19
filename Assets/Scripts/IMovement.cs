@@ -1,4 +1,6 @@
-﻿public interface IMovement
+﻿using UnityEngine;
+
+public interface IMovement
 {
-    public void Move();
+    public void Move(Transform transform, Vector3 direction);
 }
