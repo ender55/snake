@@ -8,7 +8,6 @@ public class Food : MonoBehaviour
     [SerializeField] private Transform transform;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider2D;
-    [SerializeField] private Rigidbody2D rigidbody2D;
 
     [SerializeField] private List<Sprite> foodSprites;
 
@@ -23,8 +22,6 @@ public class Food : MonoBehaviour
         spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         boxCollider2D = gameObject.AddComponent<BoxCollider2D>();
         boxCollider2D.size = new Vector2(0.5f, 0.5f);
-        rigidbody2D = gameObject.AddComponent<Rigidbody2D>();
-        rigidbody2D.gravityScale = 0;
         ResetPosition();
         ChangeSprite();
     }

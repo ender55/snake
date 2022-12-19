@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
+﻿using UnityEngine;
 
 public class SinglePlayerSpawner : MonoBehaviour
 {
@@ -9,8 +7,10 @@ public class SinglePlayerSpawner : MonoBehaviour
     [SerializeField] private Vector3Int spawnPosition;
     [SerializeField] private int spawnLength;
     [SerializeField] private PlayerKeyCodes playerKeyCodes;
-
+    [SerializeField] private SnakeViewData snakeViewData;
+    
     private SnakeBuilder snakeBuilder = new SnakeBuilder();
+    private Snake snake;
 
     private void Awake()
     {
@@ -19,6 +19,12 @@ public class SinglePlayerSpawner : MonoBehaviour
 
     private void Start()
     {
-        Snake snake = snakeBuilder.CreateSnake(snakePartPrefab, spawnDirection, spawnPosition, spawnLength, playerKeyCodes);
+        snake = snakeBuilder.CreateSnake(snakePartPrefab, spawnDirection, spawnPosition, spawnLength, playerKeyCodes, snakeViewData);
+        snake.OnGrowth += snakeBuilder.AddSnakePart;
+    }
+
+    private void OnDisable()
+    {
+        snake.OnGrowth -= snakeBuilder.AddSnakePart;
     }
 }

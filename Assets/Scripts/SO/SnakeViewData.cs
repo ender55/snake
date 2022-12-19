@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "Snake", menuName = "ScriptableObjects/SnakeData")]
-public class SnakeData : ScriptableObject
+[CreateAssetMenu(fileName = "Snake", menuName = "ScriptableObjects/SnakeViewData")]
+public class SnakeViewData : ScriptableObject
 {
-    public int size;
     public Sprite HeadTile;
     public Sprite StraightBodyTile;
     public Sprite AngleRBodyTile;
