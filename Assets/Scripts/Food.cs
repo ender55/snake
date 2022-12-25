@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Food : MonoBehaviour
@@ -22,6 +21,7 @@ public class Food : MonoBehaviour
         spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         boxCollider2D = gameObject.AddComponent<BoxCollider2D>();
         boxCollider2D.size = new Vector2(0.5f, 0.5f);
+        boxCollider2D.isTrigger = true;
         ResetPosition();
         ChangeSprite();
     }

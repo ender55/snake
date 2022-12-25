@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class Snake : MonoBehaviour, IMovementControllable, IMovable
 {
+    private SnakePart head;
+    private SnakePart tail;
     private SnakeView snakeView;
 
     public SnakeViewData SnakeViewData;
-    public SnakePart Head;
-    public SnakePart Tail;
     public IMovementInputController MovementInputController { get; set; } = new SnakeKeyboardMovementInputController();
     public IMovement Movement { get; set; } = new Movement();
     public event Action<SnakePart, Snake> OnGrowth;
@@ -25,9 +23,9 @@ public class Snake : MonoBehaviour, IMovementControllable, IMovable
         snakeView = new SnakeView(SnakeViewData);
     }
 
-    public void Update()
+    private void Update()
     {
-        Head.SetDirection(MovementInputController.HandleInput());
+        head.SetDirection(MovementInputController.HandleInput());
     }
 
     private void FixedUpdate()
@@ -37,9 +35,10 @@ public class Snake : MonoBehaviour, IMovementControllable, IMovable
 
     private void UpdateSnake()
     {
-        Movement.Move(transform, Head.Direction);
+        //todo: убрать это из снейк и сделать подписку на ивент в хвосте змеи
+        Movement.Move(transform, head.Direction);
         bool isTail = false;
-        var snakePart = Tail;
+        var snakePart = tail;
         while (!isTail)
         {
             snakePart.UpdateMovement();
@@ -50,21 +49,22 @@ public class Snake : MonoBehaviour, IMovementControllable, IMovable
 
             snakePart = snakePart.previousPart;
         }
+
         isTail = false;
-        snakePart = Head;
+        snakePart = head;
         while (!isTail)
         {
             snakePart.SetDirectionUsingPreviousPart();
             if (snakePart.nextPart == null)
             {
                 isTail = true;
-                
             }
 
             snakePart = snakePart.nextPart;
         }
+
         isTail = false;
-        snakePart = Head;
+        snakePart = head;
         while (!isTail)
         {
             snakePart.UpdateView();
@@ -81,11 +81,26 @@ public class Snake : MonoBehaviour, IMovementControllable, IMovable
     {
         if (col.TryGetComponent(out Food food))
         {
-            OnGrowth?.Invoke(Tail, this);
+            OnGrowth?.Invoke(tail, this);
         }
         else
         {
             OnDeath?.Invoke();
         }
+    }
+
+    public void Add(SnakePart snakePart)
+    {
+        if (head == null)
+        {
+            head = snakePart;
+        }
+        else
+        {
+            tail.nextPart = snakePart;
+            snakePart.previousPart = tail;
+        }
+
+        tail = snakePart;
     }
 }

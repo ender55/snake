@@ -10,10 +10,10 @@ public class SnakeBuilder
             .GetComponent<Snake>();
         GameObject.Destroy(snakeGameObject);
         snake.SnakeViewData = snakeViewData;
-        CreateSnakePart(snakePartPrefab, position, direction, snake, false);
+        CreateInitialSnakePart(snakePartPrefab, position, direction, snake, false);
         for (int i = 1; i < length; i++)
         {
-            CreateSnakePart(snakePartPrefab, position - direction * i, direction, snake);
+            CreateInitialSnakePart(snakePartPrefab, position - direction * i, direction, snake);
         }
 
         snake.MovementInputController.PlayerKeyCodes = playerKeyCodes;
@@ -21,44 +21,35 @@ public class SnakeBuilder
         return snake;
     }
 
-    public void CreateSnakePart(SnakePart snakePartPrefab, Vector3Int position, Vector3Int direction, Snake snake,
-        bool hasCollider = true)
+    private void CreateInitialSnakePart(SnakePart snakePartPrefab, Vector3Int position, Vector3Int direction,
+        Snake snake, bool hasCollider = true)
     {
         var snakePart = GameObject.Instantiate(snakePartPrefab, position, Quaternion.identity);
-        if (snake.Head == null)
-        {
-            snake.Head = snakePart;
-        }
-        else
-        {
-            snake.Tail.nextPart = snakePart;
-            snakePart.previousPart = snake.Tail;
-        }
-
-        snake.Tail = snakePart;
+        snake.Add(snakePart);
 
         if (hasCollider)
         {
             var collider = snakePart.gameObject.AddComponent<BoxCollider2D>();
             collider.size = new Vector2(0.8f, 0.8f);
+            collider.isTrigger = true;
         }
 
         snakePart.SetDirection(direction);
         snakePart.SnakeViewData = snake.SnakeViewData;
     }
 
-    public void AddSnakePart(SnakePart snakePartPrefab, Snake snake)
+    public void AddSnakePart(SnakePart tailSnakePart, Snake snake)
     {
         Vector3Int angle;
-        if (snakePartPrefab.Direction.x == -1)
+        if (tailSnakePart.Direction.x == -1)
         {
             angle = new Vector3Int(0, 0, 90);
         }
-        else if (snakePartPrefab.Direction.x == 1)
+        else if (tailSnakePart.Direction.x == 1)
         {
             angle = new Vector3Int(0, 0, -90);
         }
-        else if (snakePartPrefab.Direction.y == -1)
+        else if (tailSnakePart.Direction.y == -1)
         {
             angle = new Vector3Int(0, 0, 180);
         }
@@ -67,14 +58,9 @@ public class SnakeBuilder
             angle = new Vector3Int(0, 0, 0);
         }
 
-        var snakePart = GameObject.Instantiate(snakePartPrefab, snakePartPrefab.transform.position, Quaternion.Euler(angle));
-        snake.Tail.nextPart = snakePart;
-        snakePart.previousPart = snake.Tail;
-        snake.Tail = snakePart;
-
-        var collider = snakePart.gameObject.AddComponent<BoxCollider2D>();
-        collider.size = new Vector2(0.8f, 0.8f);
-
+        var snakePart =
+            GameObject.Instantiate(tailSnakePart, tailSnakePart.transform.position, Quaternion.Euler(angle));
+        snake.Add(snakePart);
         snakePart.SetDirection(Vector3Int.zero);
         snakePart.SnakeViewData = snake.SnakeViewData;
     }

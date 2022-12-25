@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SinglePlayerSpawner : MonoBehaviour
+public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private SnakePart snakePartPrefab;
     [SerializeField] private Vector3Int spawnDirection;

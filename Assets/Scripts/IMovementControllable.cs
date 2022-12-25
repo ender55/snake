@@ -1,4 +1,4 @@
 ﻿public interface IMovementControllable
 {
-    IMovementInputController MovementInputController { get; set; }
+    public IMovementInputController MovementInputController { get; set; }
 }
