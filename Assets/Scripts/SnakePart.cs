@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 public class SnakePart : MonoBehaviour, IMovable
@@ -7,32 +6,28 @@ public class SnakePart : MonoBehaviour, IMovable
     [SerializeField] private Vector3Int direction;
 
     private SnakeView snakeView;
-    private SnakePart snakePart;
-    
-    public IMovement Movement { get; set; } = new Movement();
-    
+
     public SnakePart previousPart;
     public SnakePart nextPart;
     public Vector3Int Direction => direction;
+    public IMovement Movement { get; set; } = new Movement();
     public SpriteRenderer SpriteRenderer { get; private set; }
     public SnakeViewData SnakeViewData { get; set; }
-    
+
     private void Start()
     {
-        snakePart = gameObject.GetComponent<SnakePart>();
         SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         snakeView = new SnakeView(SnakeViewData);
-        snakeView.Draw(snakePart);
     }
 
-    public void UpdateMovement()
+    private void FixedUpdate()
     {
         Movement.Move(transform, direction);
-    }
-
-    public void UpdateView()
-    {
-        snakeView.Draw(snakePart);
+        SetDirectionUsingPreviousPart();
+        if (nextPart == null)
+        {
+            snakeView.Draw(this);
+        }
     }
 
     public void SetDirectionUsingPreviousPart()

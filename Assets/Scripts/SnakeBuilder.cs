@@ -10,14 +10,15 @@ public class SnakeBuilder
             .GetComponent<Snake>();
         GameObject.Destroy(snakeGameObject);
         snake.SnakeViewData = snakeViewData;
+        snake.MovementInputController.PlayerKeyCodes = playerKeyCodes;
+        snake.MovementInputController.Direction = direction;
+
         CreateInitialSnakePart(snakePartPrefab, position, direction, snake, false);
         for (int i = 1; i < length; i++)
         {
             CreateInitialSnakePart(snakePartPrefab, position - direction * i, direction, snake);
         }
-
-        snake.MovementInputController.PlayerKeyCodes = playerKeyCodes;
-        snake.MovementInputController.Direction = direction;
+        
         return snake;
     }
 
@@ -38,7 +39,7 @@ public class SnakeBuilder
         snakePart.SnakeViewData = snake.SnakeViewData;
     }
 
-    public void AddSnakePart(SnakePart tailSnakePart, Snake snake)
+    public void AddSnakePart(Snake snake, SnakePart tailSnakePart)
     {
         Vector3Int angle;
         if (tailSnakePart.Direction.x == -1)

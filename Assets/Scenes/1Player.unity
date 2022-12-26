@@ -1271,21 +1271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af26c7a2ff0346ff9976128864e1232c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeSize: 3
-  spawnPosition: {x: 0, y: 0, z: 0}
-  direction: {x: 1, y: 0, z: 0}
-  up: 119
-  down: 115
-  left: 97
-  right: 100
-  snakePartPrefab: {fileID: 3582035665061488716, guid: 27565d83284ce3d48adc7a409140246b, type: 3}
-  isOnline: 0
-  HeadSprite: {fileID: 0}
-  StraightBodySprite: {fileID: 21300000, guid: dd906f853a4216c4abfe5da930f46633, type: 3}
-  AngleRBodySprite: {fileID: 0}
-  AngleLBodySprite: {fileID: 0}
-  TailSprite: {fileID: 0}
-  GameOverScreen: {fileID: 774460405}
 --- !u!4 &242392870
 Transform:
   m_ObjectHideFlags: 0
